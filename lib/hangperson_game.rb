@@ -8,8 +8,21 @@ class HangpersonGame
   # def initialize()
   # end
   
+  attr_accessor :word, :guesses, :wrong_guesses
+  
   def initialize(word)
     @word = word
+    @guesses = ''
+    @wrong_guesses = ''
+  end
+  
+  def guess(letter)
+    if @word.include?(letter)
+      @guesses += letter
+    else
+      @wrong_guesses += letter
+    end
+    true
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
