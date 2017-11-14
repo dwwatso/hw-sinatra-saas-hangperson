@@ -17,12 +17,28 @@ class HangpersonGame
   end
   
   def guess(letter)
+    raise ArgumentError unless letter && letter =~ /[a-z]/i
+    letter.downcase!
+    return false if @guesses.include?(letter) || @wrong_guesses.include?(letter)
     if @word.include?(letter)
       @guesses += letter
     else
       @wrong_guesses += letter
     end
     true
+  end
+  
+  def word_with_guesses
+    return @word.gsub(/./,'-') if @guesses == ''
+    @word.gsub(/[^#{@guesses}]/,'-')
+  end
+  
+  def check_win_or_lose
+    return :lose if @wrong_guesses.length >= 7
+    @word.chars do |char|
+      return :play unless @guesses.include?(char)
+    end
+    :win
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
