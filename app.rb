@@ -45,8 +45,9 @@ class HangpersonApp < Sinatra::Base
       set flash[:message] = "You have already used that letter." unless result
     rescue
       set flash[:message] = "Invalid guess."
+    ensure
+      redirect '/show'
     end
-    redirect '/show'
   end
   
   # Everytime a guess is made, we should eventually end up at this route.
